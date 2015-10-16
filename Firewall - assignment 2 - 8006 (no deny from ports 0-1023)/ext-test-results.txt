@@ -1,0 +1,268 @@
+Hello World! Created new.
+
+
+Test Case: #1 - Firewall Host (192.168.0.14) has limited external access
+Note: To be tested using different methods.
+
+
+
+Test Case: #2 - Internal Host (192.168.10.2) has external access
+Note: To be tested using different methods.
+
+
+
+Test Case: #8 - ICMP (expected drops)
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): NO FLAGS are set, 40 headers + 0 data bytes
+
+
+
+Test Case: #9 - Default Policies to be dropped
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): udp mode set, 28 headers + 0 data bytes
+
+
+
+Test Case: #10 - External communication w. Firewall dropped
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): udp mode set, 28 headers + 0 data bytes
+
+
+
+Test Case: #11 - Drop all packets pretending to be internal host
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): udp mode set, 28 headers + 0 data bytes
+
+
+
+Test Case: #13 - Reject inbound SYN packets (no target port)
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+
+
+Test Case: #14 - Reject inbound SYN packets ('high port' target)
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+
+
+Test Case: #15 - Accept all Fragments on allowed ports
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 5 packets received, 0% packet loss
+round-trip min/avg/max = 0.6/0.6/0.7 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=80 flags=SA seq=0 win=29200 rtt=0.6 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=80 flags=SA seq=1 win=29200 rtt=0.6 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=80 flags=SA seq=2 win=29200 rtt=0.6 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=80 flags=SA seq=3 win=29200 rtt=0.7 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=80 flags=SA seq=4 win=29200 rtt=0.6 ms
+
+
+
+Test Case: #16 - Accept all Fragments on allowed ports
+Note: This port specified is disallowed. Drop them.
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+
+
+Test Case #17 - Incoming TCP connection on permissible ports (SYN)
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 5 packets received, 0% packet loss
+round-trip min/avg/max = 0.6/0.6/0.6 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=80 flags=SA seq=0 win=29200 rtt=0.6 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=80 flags=SA seq=1 win=29200 rtt=0.6 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=80 flags=SA seq=2 win=29200 rtt=0.6 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=80 flags=SA seq=3 win=29200 rtt=0.6 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=80 flags=SA seq=4 win=29200 rtt=0.6 ms
+
+
+
+Test Case: #18 - Incoming TCP connection on permitted ports (non-SYN)
+Note: This is a random, non-SYN packet. Drop these random packets.
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): F set, 40 headers + 0 data bytes
+
+
+
+Test Case: #19 - Drop packets with SYN bits set
+Note: This is on a bad port. Drop them.
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+
+
+Test Case: #20 - Drop packets with FIN bits set
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): F set, 40 headers + 0 data bytes
+
+
+
+Test Case: #21 - Drop packets with SYN and FIN bits set
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): SF set, 40 headers + 0 data bytes
+
+
+
+Test Case: #22 - Drop Telnet packets (internal)
+
+--- 192.168.10.2 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.10.2 (em1 192.168.10.2): S set, 40 headers + 0 data bytes
+
+
+
+Test Case: #24 - Drop Telnet packets (external)
+
+--- 192.168.10.1 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.10.1 (em1 192.168.10.1): S set, 40 headers + 0 data bytes
+
+
+
+Test Case: #25 - Drop external traffic to specified ports
+Target Host: Firewall - 192.168.0.14
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): udp mode set, 28 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): udp mode set, 28 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): udp mode set, 28 headers + 0 data bytes
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 192.168.0.14 (em1 192.168.0.14): udp mode set, 28 headers + 0 data bytes
+
+
+
+Test Case: #27 - Set control connections to Minimum Delay (SSH)
+Note: To be tested using alternate methods. This is supplementary.
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 5 packets received, 0% packet loss
+round-trip min/avg/max = 0.6/0.6/0.7 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=22 flags=SA seq=0 win=29200 rtt=0.7 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=22 flags=SA seq=1 win=29200 rtt=0.6 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=22 flags=SA seq=2 win=29200 rtt=0.6 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=22 flags=SA seq=3 win=29200 rtt=0.6 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=0 sport=22 flags=SA seq=4 win=29200 rtt=0.7 ms
+
+
+
+Test Case: #28 - Set control connections to Minimum Delay (FTP)
+Note: To be tested using alternate methods. This is supplementary.
+
+--- 192.168.0.14 hping statistic ---
+5 packets transmitted, 5 packets received, 0% packet loss
+round-trip min/avg/max = 0.5/0.6/0.7 ms
+HPING 192.168.0.14 (em1 192.168.0.14): S set, 40 headers + 0 data bytes
+len=46 ip=192.168.0.14 ttl=63 DF id=6726 sport=20 flags=RA seq=0 win=0 rtt=0.5 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=6727 sport=20 flags=RA seq=1 win=0 rtt=0.7 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=6728 sport=20 flags=RA seq=2 win=0 rtt=0.7 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=6729 sport=20 flags=RA seq=3 win=0 rtt=0.7 ms
+len=46 ip=192.168.0.14 ttl=63 DF id=6730 sport=20 flags=RA seq=4 win=0 rtt=0.5 ms
+
+
+
+Test Case: #29 - Set control connections to Max. Throughput (FTP)
+Note: To be tested using alternate methods.
+
+
+
+End of External Testing
+
